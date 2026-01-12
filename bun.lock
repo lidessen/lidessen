@@ -7,6 +7,7 @@
       "dependencies": {
         "@ai-sdk/deepseek": "^2.0.4",
         "ai": "^6.0.27",
+        "zod": "^4.3.5",
       },
       "devDependencies": {
         "@types/bun": "latest",
