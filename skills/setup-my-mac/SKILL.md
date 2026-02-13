@@ -1,6 +1,6 @@
 ---
 name: setup-my-mac
-description: Automate setting up a fresh macOS machine with essential development tools. Use when the user wants to install dev tools on a new Mac, set up their development environment, or run the mac setup script. Covers Homebrew, uv, Python, Bun, Warp, Zed, and more tools as they are added.
+description: Automate setting up a fresh macOS machine with essential development tools. Use when the user wants to install dev tools on a new Mac, set up their development environment, or run the mac setup script. Covers Homebrew, uv, Python, Rust, Go, Bun, Claude Code, gh, fnm, ripgrep, jq, Warp, Zed, OrbStack, Raycast, Edge, and more tools as they are added.
 ---
 
 # Setup My Mac
@@ -20,10 +20,19 @@ Automate installation of development tools on a fresh macOS. All tools are insta
 | Homebrew | Official script | `/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"` | brew.sh |
 | uv | brew (official) | `brew install uv` | docs.astral.sh/uv |
 | Python (latest) | uv | `uv python install` + `uv python pin` globally | docs.astral.sh/uv |
+| Rust | Official rustup (brew NOT listed) | `curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs \| sh -s -- -y` | rust-lang.org/tools/install |
+| Go | Official .pkg (brew NOT listed) | Download from `go.dev/dl/` + `sudo installer -pkg` | go.dev/doc/install |
 | Bun | brew (official) | `brew install oven-sh/bun/bun` | bun.sh/docs/installation |
-| Warp | brew cask (official) | `brew install --cask warp` | docs.warp.dev |
 | Claude Code | brew cask (official) | `brew install --cask claude-code` | formulae.brew.sh/cask/claude-code |
+| gh | brew (official) | `brew install gh` | cli.github.com |
+| fnm | brew (official) | `brew install fnm` | github.com/Schniz/fnm |
+| ripgrep | brew (official) | `brew install ripgrep` | github.com/BurntSushi/ripgrep |
+| jq | brew (official) | `brew install jq` | jqlang.github.io/jq |
+| Warp | brew cask (official) | `brew install --cask warp` | docs.warp.dev |
 | Zed | brew cask (official) | `brew install --cask zed` | zed.dev/docs/installation |
+| OrbStack | brew cask (official) | `brew install --cask orbstack` | orbstack.dev |
+| Raycast | brew cask (official) | `brew install --cask raycast` | raycast.com |
+| Edge | brew cask (official) | `brew install --cask microsoft-edge` | microsoft.com/edge |
 
 ## Usage
 
