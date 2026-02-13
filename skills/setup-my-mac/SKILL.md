@@ -32,7 +32,7 @@ Automate installation of development tools on a fresh macOS. All tools are insta
 Deploy `scripts/bootstrap.sh` to your website, then on a fresh Mac:
 
 ```bash
-curl -fsSL https://your-domain.com/setup-my-mac.sh | bash
+curl -fsSL https://lidessen.dev/skills/setup-my-mac/scripts/bootstrap.sh | bash
 ```
 
 What happens:
