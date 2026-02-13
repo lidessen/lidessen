@@ -17,30 +17,36 @@ info()  { printf '\n\033[1;34m==> %s\033[0m\n' "$*"; }
 ok()    { printf '    \033[1;32m✔ %s\033[0m\n' "$*"; }
 skip()  { printf '    \033[1;33m⏭ %s (already installed)\033[0m\n' "$*"; }
 
-# ─── Tool functions ───────────────────────────────────────────────────
-# Each function is self-contained: check → install → confirm.
+# ─── Generic installers ──────────────────────────────────────────────
+# Format: "name:formula:check_cmd"  (check_cmd defaults to name)
+
+brew_formula() {
+  local name="$1" formula="$2" cmd="${3:-$1}"
+  info "$name"
+  if command -v "$cmd" &>/dev/null; then skip "$name"; return; fi
+  brew install "$formula"
+  ok "$name installed"
+}
+
+brew_cask() {
+  local name="$1" cask="$2"
+  info "$name"
+  if brew list --cask "$cask" &>/dev/null 2>&1; then skip "$name"; return; fi
+  brew install --cask "$cask"
+  ok "$name installed"
+}
+
+# ─── Custom installers (non-trivial logic) ────────────────────────────
 
 install_brew() {
   # Source: https://brew.sh
   info "Homebrew"
-  if command -v brew &>/dev/null; then
-    skip "brew"; return
-  fi
+  if command -v brew &>/dev/null; then skip "brew"; return; fi
   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
   if [[ -f /opt/homebrew/bin/brew ]]; then
     eval "$(/opt/homebrew/bin/brew shellenv)"
   fi
   ok "brew installed"
-}
-
-install_uv() {
-  # Source: https://docs.astral.sh/uv — official brew method
-  info "uv"
-  if command -v uv &>/dev/null; then
-    skip "uv"; return
-  fi
-  brew install uv
-  ok "uv installed"
 }
 
 install_python() {
@@ -61,7 +67,7 @@ install_python() {
 }
 
 install_rust() {
-  # Source: https://www.rust-lang.org/tools/install — official rustup (brew NOT listed)
+  # Source: https://www.rust-lang.org/tools/install — brew NOT listed
   info "Rust (via rustup)"
   if command -v rustup &>/dev/null; then
     skip "rust ($(rustc --version 2>/dev/null | awk '{print $2}'))"; return
@@ -73,15 +79,13 @@ install_rust() {
 }
 
 install_go() {
-  # Source: https://go.dev/doc/install — official .pkg installer (brew NOT listed)
+  # Source: https://go.dev/doc/install — brew NOT listed
   info "Go"
   if command -v go &>/dev/null; then
     skip "go ($(go version | awk '{print $3}'))"; return
   fi
-  local goversion pkg
+  local goversion pkg arch
   goversion=$(curl -fsSL 'https://go.dev/VERSION?m=text' | head -1)
-  # Detect architecture
-  local arch
   arch=$(uname -m)
   if [[ "$arch" == "arm64" ]]; then
     pkg="${goversion}.darwin-arm64.pkg"
@@ -94,175 +98,80 @@ install_go() {
   ok "go $goversion installed"
 }
 
-install_bun() {
-  # Source: https://bun.sh/docs/installation — official brew method
-  info "Bun"
-  if command -v bun &>/dev/null; then
-    skip "bun"; return
-  fi
-  brew install oven-sh/bun/bun
-  ok "bun installed"
+install_ohmyzsh() {
+  # Source: https://ohmyz.sh — official install script
+  info "Oh My Zsh"
+  if [[ -d "$HOME/.oh-my-zsh" ]]; then skip "oh-my-zsh"; return; fi
+  RUNZSH=no KEEP_ZSHRC=yes sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+  ok "oh-my-zsh installed"
 }
 
-install_claude() {
-  # Source: https://formulae.brew.sh/cask/claude-code — official brew cask
-  info "Claude Code"
-  if command -v claude &>/dev/null; then
-    skip "claude"; return
-  fi
-  brew install --cask claude-code
-  ok "claude installed"
-}
-
-install_gh() {
-  # Source: https://cli.github.com — official brew method
-  info "GitHub CLI"
-  if command -v gh &>/dev/null; then
-    skip "gh"; return
-  fi
-  brew install gh
-  ok "gh installed"
-}
-
-install_fnm() {
-  # Source: https://github.com/Schniz/fnm — official brew method
-  info "fnm"
-  if command -v fnm &>/dev/null; then
-    skip "fnm"; return
-  fi
-  brew install fnm
-  ok "fnm installed"
-}
-
-install_ripgrep() {
-  # Source: https://github.com/BurntSushi/ripgrep — official brew method
-  info "ripgrep"
-  if command -v rg &>/dev/null; then
-    skip "ripgrep"; return
-  fi
-  brew install ripgrep
-  ok "ripgrep installed"
-}
-
-install_jq() {
-  # Source: https://jqlang.github.io/jq — official brew method
-  info "jq"
-  if command -v jq &>/dev/null; then
-    skip "jq"; return
-  fi
-  brew install jq
-  ok "jq installed"
-}
-
-install_warp() {
-  # Source: https://docs.warp.dev — official brew cask
-  info "Warp"
-  if brew list --cask warp &>/dev/null 2>&1; then
-    skip "warp"; return
-  fi
-  brew install --cask warp
-  ok "warp installed"
-}
-
-install_zed() {
-  # Source: https://zed.dev/docs/installation — official brew cask
-  info "Zed"
-  if brew list --cask zed &>/dev/null 2>&1; then
-    skip "zed"; return
-  fi
-  brew install --cask zed
-  ok "zed installed"
-}
-
-install_orbstack() {
-  # Source: https://orbstack.dev — official brew cask
-  info "OrbStack"
-  if brew list --cask orbstack &>/dev/null 2>&1; then
-    skip "orbstack"; return
-  fi
-  brew install --cask orbstack
-  ok "orbstack installed"
-}
-
-install_raycast() {
-  # Source: https://raycast.com — official brew cask
-  info "Raycast"
-  if brew list --cask raycast &>/dev/null 2>&1; then
-    skip "raycast"; return
-  fi
-  brew install --cask raycast
-  ok "raycast installed"
-}
-
-install_edge() {
-  # Source: https://www.microsoft.com/edge — official brew cask
-  info "Microsoft Edge"
-  if brew list --cask microsoft-edge &>/dev/null 2>&1; then
-    skip "edge"; return
-  fi
-  brew install --cask microsoft-edge
-  ok "edge installed"
+install_gitconfig() {
+  info "Git config"
+  git config --global init.defaultBranch main
+  git config --global core.ignorecase false
+  git config --global pull.rebase true
+  git config --global push.autoSetupRemote true
+  ok "git configured (defaultBranch=main, ignorecase=false, pull.rebase, push.autoSetupRemote)"
 }
 
 # ─── Tool registry ───────────────────────────────────────────────────
-# Order matters: brew first, python depends on uv.
+# Order matters: brew must be first, python depends on uv.
 ALL_TOOLS=(
   brew uv python rust go bun claude
   gh fnm ripgrep jq
   warp zed orbstack raycast edge
+  ohmyzsh gitconfig
 )
 
-show_list() {
-  echo "Available tools: ${ALL_TOOLS[*]}"
+dispatch() {
+  local tool="$1"
+  case "$tool" in
+    # Custom installers
+    brew)      install_brew      ;;
+    python)    install_python    ;;
+    rust)      install_rust      ;;
+    go)        install_go        ;;
+    ohmyzsh)   install_ohmyzsh   ;;
+    gitconfig) install_gitconfig ;;
+    # Brew formulas — name:formula:check_cmd
+    uv)        brew_formula "uv"      "uv"              ;;
+    bun)       brew_formula "bun"     "oven-sh/bun/bun" ;;
+    gh)        brew_formula "gh"      "gh"              ;;
+    fnm)       brew_formula "fnm"     "fnm"             ;;
+    ripgrep)   brew_formula "ripgrep" "ripgrep" "rg"    ;;
+    jq)        brew_formula "jq"      "jq"              ;;
+    # Brew casks — name:cask
+    claude)    brew_cask "Claude Code"     "claude-code"     ;;
+    warp)      brew_cask "Warp"            "warp"            ;;
+    zed)       brew_cask "Zed"             "zed"             ;;
+    orbstack)  brew_cask "OrbStack"        "orbstack"        ;;
+    raycast)   brew_cask "Raycast"         "raycast"         ;;
+    edge)      brew_cask "Microsoft Edge"  "microsoft-edge"  ;;
+    *)         echo "Unknown tool: $tool (use --list to see available)" ;;
+  esac
 }
 
 show_summary() {
   info "Installed tools:"
-  echo "    brew    : $(brew --version 2>/dev/null | head -n1 || echo 'N/A')"
-  echo "    uv      : $(uv --version 2>/dev/null || echo 'N/A')"
-  echo "    python  : $(uv python list --only-installed 2>/dev/null | head -n1 | awk '{print $1}')"
-  echo "    rust    : $(rustc --version 2>/dev/null | awk '{print $2}' || echo 'N/A')"
-  echo "    go      : $(go version 2>/dev/null | awk '{print $3}' || echo 'N/A')"
-  echo "    bun     : $(bun --version 2>/dev/null || echo 'N/A')"
-  echo "    claude  : $(claude --version 2>/dev/null || echo 'N/A')"
-  echo "    gh      : $(gh --version 2>/dev/null | head -n1 || echo 'N/A')"
-  echo "    fnm     : $(fnm --version 2>/dev/null || echo 'N/A')"
-  echo "    ripgrep : $(rg --version 2>/dev/null | head -n1 || echo 'N/A')"
-  echo "    jq      : $(jq --version 2>/dev/null || echo 'N/A')"
-  echo "    warp    : $(brew list --cask --versions warp 2>/dev/null || echo 'N/A')"
-  echo "    zed     : $(brew list --cask --versions zed 2>/dev/null || echo 'N/A')"
-  echo "    orbstack: $(brew list --cask --versions orbstack 2>/dev/null || echo 'N/A')"
-  echo "    raycast : $(brew list --cask --versions raycast 2>/dev/null || echo 'N/A')"
-  echo "    edge    : $(brew list --cask --versions microsoft-edge 2>/dev/null || echo 'N/A')"
+  command -v brew    &>/dev/null && echo "    brew    : $(brew --version | head -n1)"
+  command -v uv      &>/dev/null && echo "    uv      : $(uv --version)"
+  command -v rustc   &>/dev/null && echo "    rust    : $(rustc --version | awk '{print $2}')"
+  command -v go      &>/dev/null && echo "    go      : $(go version | awk '{print $3}')"
+  command -v bun     &>/dev/null && echo "    bun     : $(bun --version)"
+  command -v claude  &>/dev/null && echo "    claude  : $(claude --version 2>/dev/null || echo 'installed')"
+  command -v gh      &>/dev/null && echo "    gh      : $(gh --version | head -n1)"
+  command -v fnm     &>/dev/null && echo "    fnm     : $(fnm --version)"
+  command -v rg      &>/dev/null && echo "    ripgrep : $(rg --version | head -n1)"
+  command -v jq      &>/dev/null && echo "    jq      : $(jq --version)"
+  [[ -d "$HOME/.oh-my-zsh" ]]   && echo "    ohmyzsh : installed"
 }
 
 # ─── Main ─────────────────────────────────────────────────────────────
 if [[ "${1:-}" == "--list" ]]; then
-  show_list; exit 0
+  echo "Available tools: ${ALL_TOOLS[*]}"; exit 0
 fi
 
 tools=("${@:-${ALL_TOOLS[@]}}")
-
-for tool in "${tools[@]}"; do
-  case "$tool" in
-    brew)     install_brew     ;;
-    uv)       install_uv       ;;
-    python)   install_python   ;;
-    rust)     install_rust     ;;
-    go)       install_go       ;;
-    bun)      install_bun      ;;
-    claude)   install_claude   ;;
-    gh)       install_gh       ;;
-    fnm)      install_fnm      ;;
-    ripgrep)  install_ripgrep  ;;
-    jq)       install_jq       ;;
-    warp)     install_warp     ;;
-    zed)      install_zed      ;;
-    orbstack) install_orbstack ;;
-    raycast)  install_raycast  ;;
-    edge)     install_edge     ;;
-    *)        echo "Unknown tool: $tool (use --list to see available tools)" ;;
-  esac
-done
-
+for tool in "${tools[@]}"; do dispatch "$tool"; done
 show_summary
