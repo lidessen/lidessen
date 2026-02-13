@@ -41,13 +41,13 @@ else
 fi
 
 # ─── 3. Claude Code ──────────────────────────────────────────────────
-# Source: https://code.claude.com/docs/en/setup
-# Official native installer — no Node.js required, auto-updates.
+# Source: https://formulae.brew.sh/cask/claude-code
+# Official brew cask — same philosophy: brew first when officially supported.
 info "Claude Code"
 if command -v claude &>/dev/null; then
   ok "claude already installed"
 else
-  curl -fsSL https://claude.ai/install.sh | bash
+  brew install --cask claude-code
   ok "claude installed"
 fi
 
