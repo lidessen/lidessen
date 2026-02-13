@@ -26,13 +26,32 @@ Automate installation of development tools on a fresh macOS. All tools are insta
 
 ## Usage
 
-Run the setup script:
+### One-liner bootstrap (recommended)
+
+Deploy `scripts/bootstrap.sh` to your website, then on a fresh Mac:
+
+```bash
+curl -fsSL https://your-domain.com/setup-my-mac.sh | bash
+```
+
+What happens:
+
+1. Installs **brew** and **bun** (the minimum bootstrap dependencies).
+2. Installs **Claude Code** via `bun install -g @anthropic-ai/claude-code`.
+3. Installs this skill via `bunx skills add lidessen/lidessen@setup-my-mac -y -g`.
+4. Launches Claude in **headless mode** (`claude -p --dangerously-skip-permissions`) to install all remaining tools (uv, Python, Warp, Zed, etc.) using this skill's instructions.
+
+Requires `ANTHROPIC_API_KEY` to be set (the script will prompt if missing).
+
+### Manual mode
+
+Run the setup script directly (no Claude required):
 
 ```bash
 bash scripts/setup.sh
 ```
 
-Or run individual sections — the script prints clear headers for each tool so you can copy-paste single commands if preferred.
+Each tool section prints clear headers so you can copy-paste individual commands if preferred.
 
 ## Adding New Tools
 
