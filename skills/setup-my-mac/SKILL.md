@@ -22,6 +22,7 @@ Automate installation of development tools on a fresh macOS. All tools are insta
 | Python (latest) | uv | `uv python install` + `uv python pin` globally | docs.astral.sh/uv |
 | Bun | brew (official) | `brew install oven-sh/bun/bun` | bun.sh/docs/installation |
 | Warp | brew cask (official) | `brew install --cask warp` | docs.warp.dev |
+| Claude Code | brew cask (official) | `brew install --cask claude-code` | formulae.brew.sh/cask/claude-code |
 | Zed | brew cask (official) | `brew install --cask zed` | zed.dev/docs/installation |
 
 ## Usage

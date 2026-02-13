@@ -69,7 +69,18 @@ else
   ok "bun installed"
 fi
 
-# ─── 5. Warp ─────────────────────────────────────────────────────────
+# ─── 5. Claude Code ──────────────────────────────────────────────────
+# Source: https://formulae.brew.sh/cask/claude-code
+# Official brew cask.
+info "Claude Code"
+if command -v claude &>/dev/null; then
+  skip "claude"
+else
+  brew install --cask claude-code
+  ok "claude installed"
+fi
+
+# ─── 6. Warp ─────────────────────────────────────────────────────────
 # Source: https://docs.warp.dev/getting-started/
 # Official docs list brew cask as a supported method.
 info "Warp"
@@ -80,7 +91,7 @@ else
   ok "warp installed"
 fi
 
-# ─── 6. Zed ──────────────────────────────────────────────────────────
+# ─── 7. Zed ──────────────────────────────────────────────────────────
 # Source: https://zed.dev/docs/installation
 # Official docs list brew cask as a supported method.
 info "Zed"
@@ -97,5 +108,6 @@ echo "    brew  : $(brew --version | head -n1)"
 echo "    uv    : $(uv --version)"
 echo "    python: $(uv python list --only-installed | head -n1 | awk '{print $1}')"
 echo "    bun   : $(bun --version 2>/dev/null || echo 'N/A')"
+echo "    claude: $(claude --version 2>/dev/null || echo 'N/A')"
 echo "    warp  : $(brew list --cask --versions warp 2>/dev/null || echo 'N/A')"
 echo "    zed   : $(brew list --cask --versions zed 2>/dev/null || echo 'N/A')"

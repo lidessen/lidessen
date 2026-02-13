@@ -22,7 +22,8 @@ info "Homebrew"
 if command -v brew &>/dev/null; then
   ok "brew already installed"
 else
-  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+  # NONINTERACTIVE avoids the confirmation prompt that would break curl|bash
+  NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
   # Apple Silicon puts brew at /opt/homebrew
   if [[ -f /opt/homebrew/bin/brew ]]; then
     eval "$(/opt/homebrew/bin/brew shellenv)"
@@ -74,11 +75,11 @@ ok "skill installed"
 # ─── 6. Hand off to Claude (headless) ───────────────────────────────
 info "Handing off to Claude (headless mode)…"
 claude -p --dangerously-skip-permissions \
-  --output-format stream-json --verbose \
-  "You have the setup-my-mac skill installed. Use it to install ALL remaining
-tools listed in the skill (uv, Python via uv with global pin, Warp, Zed).
-Homebrew and Bun are already installed — skip them.
-Run each install command, verify it succeeded, then move to the next.
-Print a final summary of installed tool versions when done."
+  --output-format text \
+  "You have the setup-my-mac skill installed.
+Read the skill's SKILL.md, then install every tool in the Tools & Install Methods
+table that is not already present on this machine.
+For each tool: run the listed command, verify success, then move on.
+Print a final summary of all installed tool versions when done."
 
 info "Bootstrap complete!"
