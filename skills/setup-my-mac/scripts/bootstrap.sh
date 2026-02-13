@@ -51,20 +51,15 @@ else
   ok "claude installed"
 fi
 
-# ─── 4. Check ANTHROPIC_API_KEY ──────────────────────────────────────
-info "Checking API key"
-if [[ -z "${ANTHROPIC_API_KEY:-}" ]]; then
-  warn "ANTHROPIC_API_KEY is not set."
-  printf '    Enter your Anthropic API key (or press Enter to skip): '
-  read -r api_key
-  if [[ -n "$api_key" ]]; then
-    export ANTHROPIC_API_KEY="$api_key"
-    ok "key set for this session"
-  else
-    fail "ANTHROPIC_API_KEY is required for Claude headless mode."
-  fi
+# ─── 4. Claude auth (subscription login) ─────────────────────────────
+# Uses OAuth login (opens browser). On a fresh Mac you need to log in once.
+info "Claude auth"
+if claude auth status &>/dev/null; then
+  ok "already logged in"
 else
-  ok "ANTHROPIC_API_KEY is set"
+  warn "Not logged in — opening browser for OAuth…"
+  claude login </dev/tty
+  ok "logged in"
 fi
 
 # ─── 5. Install setup-my-mac skill ──────────────────────────────────

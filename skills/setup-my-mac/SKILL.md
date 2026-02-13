@@ -41,7 +41,7 @@ What happens:
 3. Installs this skill via `bunx skills add lidessen/lidessen@setup-my-mac -y -g`.
 4. Launches Claude in **headless mode** (`claude -p --dangerously-skip-permissions`) to install all remaining tools (uv, Python, Warp, Zed, etc.) using this skill's instructions.
 
-Requires `ANTHROPIC_API_KEY` to be set (the script will prompt if missing).
+If not already logged in, the script opens a browser for Claude OAuth login.
 
 ### Manual mode
 
