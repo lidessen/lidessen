@@ -49,7 +49,7 @@ If not already logged in, the script opens a browser for Claude OAuth login.
 Run the setup script directly (no Claude required):
 
 ```bash
-bash scripts/setup.sh
+bash scripts/install.sh
 ```
 
 Each tool section prints clear headers so you can copy-paste individual commands if preferred.
@@ -61,4 +61,4 @@ To add a tool, follow the same principle:
 1. Check the tool's official website for installation instructions.
 2. If brew is listed as an official method, use brew.
 3. Otherwise use the official standalone installer.
-4. Add the tool to the table above and to `scripts/setup.sh`.
+4. Add the tool to the table above and to `scripts/install.sh`.
