@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 #
-# bootstrap.sh — One-liner bootstrap for a fresh macOS dev environment.
+# setup-my-mac.sh — One-liner bootstrap for a fresh macOS dev environment.
 #
-#   curl -fsSL https://lidessen.dev/skills/setup-my-mac/scripts/bootstrap.sh | bash
+#   curl -fsSL https://lidessen.dev/setup-my-mac.sh | bash
 #
 # This script installs the bare minimum (brew, bun, claude-code),
 # then delegates the rest to Claude in headless mode via the

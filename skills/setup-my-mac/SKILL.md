@@ -29,10 +29,10 @@ Automate installation of development tools on a fresh macOS. All tools are insta
 
 ### One-liner bootstrap (recommended)
 
-Deploy `scripts/bootstrap.sh` to your website, then on a fresh Mac:
+`setup-my-mac.sh` sits at the repo root and is served at the site root. On a fresh Mac:
 
 ```bash
-curl -fsSL https://lidessen.dev/skills/setup-my-mac/scripts/bootstrap.sh | bash
+curl -fsSL https://lidessen.dev/setup-my-mac.sh | bash
 ```
 
 What happens:
