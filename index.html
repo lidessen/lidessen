@@ -11,6 +11,7 @@
       font-family: -apple-system, "Noto Sans SC", "Helvetica Neue", sans-serif;
       color: #1a1a1a;
       background: #fafafa;
+      background-image: radial-gradient(circle at 20% 10%, rgba(0,0,0,0.02), transparent 40%);
       line-height: 1.8;
       -webkit-font-smoothing: antialiased;
     }
@@ -24,47 +25,49 @@
     h1 {
       font-size: 1.25rem;
       font-weight: 600;
-      letter-spacing: 0.02em;
-      margin-bottom: 0.35rem;
+      letter-spacing: -0.01em;
+      margin-bottom: 6px;
     }
 
     .subtitle {
-      font-size: 0.8rem;
-      color: #999;
-      margin-bottom: 3rem;
+      font-size: 14px;
+      color: rgba(0,0,0,0.45);
+      line-height: 1.6;
+      margin-bottom: 28px;
     }
 
-    hr {
-      border: none;
-      border-top: 1px solid #e5e5e5;
-      margin-bottom: 1.5rem;
+    .divider {
+      height: 1px;
+      background: linear-gradient(to right, transparent, rgba(0,0,0,0.08), transparent);
+      margin-bottom: 22px;
     }
 
     ul {
       list-style: none;
     }
 
-    li {
-      padding: 0.45rem 0;
-      display: flex;
-      align-items: baseline;
-      gap: 0.6rem;
-    }
-
-    a {
-      color: #1a1a1a;
+    li a {
+      display: block;
+      padding: 10px 12px;
+      border-radius: 10px;
       text-decoration: none;
-      border-bottom: 1px dashed #ccc;
-      transition: border-color 0.2s;
+      color: #1a1a1a;
+      transition: all 0.15s ease;
     }
 
-    a:hover {
-      border-color: #1a1a1a;
+    li a:hover {
+      background: rgba(0,0,0,0.04);
+      transform: translateX(2px);
     }
 
-    .dim {
-      color: #aaa;
-      font-size: 0.8rem;
+    .repo-name {
+      font-size: 0.9rem;
+    }
+
+    .repo-desc {
+      font-size: 12px;
+      color: rgba(0,0,0,0.45);
+      margin-top: 2px;
     }
 
     footer {
@@ -78,10 +81,19 @@
   <main>
     <h1>Lidessen</h1>
     <p class="subtitle">天地转，光阴迫。一万年太久，只争朝夕。</p>
-    <hr>
+    <div class="divider"></div>
     <ul>
-      <li><a href="https://github.com/lidessen/lidessen">GitHub</a></li>
-      <li><a href="setup-my-mac.sh">setup-my-mac.sh</a> <span class="dim">macOS 装机脚本</span></li>
+      <li>
+        <a href="https://github.com/lidessen/lidessen">
+          <div class="repo-name">GitHub</div>
+        </a>
+      </li>
+      <li>
+        <a href="setup-my-mac.sh">
+          <div class="repo-name">setup-my-mac.sh</div>
+          <div class="repo-desc">macOS 装机脚本</div>
+        </a>
+      </li>
     </ul>
     <footer>&copy; Lidessen</footer>
   </main>
