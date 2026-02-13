@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lidessen</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Noto Sans SC", "Helvetica Neue", sans-serif;
+      color: #1d1d1f;
+      background: #fbfbfd;
+      line-height: 1.47059;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      text-rendering: optimizeLegibility;
+    }
+
+    main {
+      max-width: 520px;
+      margin: 0 auto;
+      padding: 8rem 2rem 6rem;
+    }
+
+    h1 {
+      font-size: 2rem;
+      font-weight: 700;
+      letter-spacing: -0.025em;
+      color: #1d1d1f;
+    }
+
+    .subtitle {
+      font-size: 1.05rem;
+      font-weight: 400;
+      color: #86868b;
+      line-height: 1.5;
+      margin-top: 8px;
+      letter-spacing: 0.01em;
+    }
+
+    .section {
+      margin-top: 3.5rem;
+    }
+
+    .section-title {
+      font-size: 0.7rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: #86868b;
+      margin-bottom: 12px;
+      padding-left: 14px;
+    }
+
+    ul {
+      list-style: none;
+    }
+
+    li + li {
+      margin-top: 2px;
+    }
+
+    li a {
+      display: block;
+      padding: 14px;
+      border-radius: 12px;
+      text-decoration: none;
+      color: #1d1d1f;
+      transition: background 0.2s ease;
+    }
+
+    li a:hover {
+      background: rgba(0,0,0,0.04);
+    }
+
+    li a:active {
+      background: rgba(0,0,0,0.07);
+    }
+
+    .item-name {
+      font-size: 0.95rem;
+      font-weight: 500;
+      letter-spacing: -0.01em;
+    }
+
+    .item-desc {
+      font-size: 0.8rem;
+      color: #86868b;
+      margin-top: 3px;
+      line-height: 1.4;
+    }
+
+    .arrow {
+      float: right;
+      color: #d2d2d7;
+      font-size: 1.1rem;
+      line-height: 1;
+      transition: transform 0.2s ease, color 0.2s ease;
+    }
+
+    li a:hover .arrow {
+      transform: translateX(3px);
+      color: #86868b;
+    }
+
+    footer {
+      margin-top: 5rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid rgba(0,0,0,0.06);
+      font-size: 0.75rem;
+      color: #d2d2d7;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Lidessen</h1>
+    <p class="subtitle">天地转，光阴迫。一万年太久，只争朝夕。</p>
+
+    <div class="section">
+      <div class="section-title">Projects</div>
+      <ul>
+        <li>
+          <a href="https://github.com/lidessen/lidessen">
+            <span class="arrow">&#8250;</span>
+            <div class="item-name">GitHub</div>
+            <div class="item-desc">Source code &amp; repositories</div>
+          </a>
+        </li>
+        <li>
+          <a href="setup-my-mac.sh">
+            <span class="arrow">&#8250;</span>
+            <div class="item-name">setup-my-mac.sh</div>
+            <div class="item-desc">macOS 装机脚本</div>
+          </a>
+        </li>
+      </ul>
+    </div>
+
+    <footer>&copy; Lidessen</footer>
+  </main>
+</body>
+</html>
