@@ -154,17 +154,26 @@ dispatch() {
 
 show_summary() {
   info "Installed tools:"
-  command -v brew    &>/dev/null && echo "    brew    : $(brew --version | head -n1)"
-  command -v uv      &>/dev/null && echo "    uv      : $(uv --version)"
-  command -v rustc   &>/dev/null && echo "    rust    : $(rustc --version | awk '{print $2}')"
-  command -v go      &>/dev/null && echo "    go      : $(go version | awk '{print $3}')"
-  command -v bun     &>/dev/null && echo "    bun     : $(bun --version)"
-  command -v claude  &>/dev/null && echo "    claude  : $(claude --version 2>/dev/null || echo 'installed')"
-  command -v gh      &>/dev/null && echo "    gh      : $(gh --version | head -n1)"
-  command -v fnm     &>/dev/null && echo "    fnm     : $(fnm --version)"
-  command -v rg      &>/dev/null && echo "    ripgrep : $(rg --version | head -n1)"
-  command -v jq      &>/dev/null && echo "    jq      : $(jq --version)"
-  [[ -d "$HOME/.oh-my-zsh" ]]   && echo "    ohmyzsh : installed"
+  # CLI tools
+  command -v brew  &>/dev/null && echo "    brew     : $(brew --version | head -n1)"
+  command -v uv    &>/dev/null && echo "    uv       : $(uv --version)"
+  command -v uv    &>/dev/null && echo "    python   : $(uv python list --only-installed 2>/dev/null | head -n1 | awk '{print $1}')"
+  command -v rustc &>/dev/null && echo "    rust     : $(rustc --version | awk '{print $2}')"
+  command -v go    &>/dev/null && echo "    go       : $(go version | awk '{print $3}')"
+  command -v bun   &>/dev/null && echo "    bun      : $(bun --version)"
+  command -v gh    &>/dev/null && echo "    gh       : $(gh --version | head -n1)"
+  command -v fnm   &>/dev/null && echo "    fnm      : $(fnm --version)"
+  command -v rg    &>/dev/null && echo "    ripgrep  : $(rg --version | head -n1)"
+  command -v jq    &>/dev/null && echo "    jq       : $(jq --version)"
+  # GUI apps (check via brew cask)
+  brew list --cask claude-code     &>/dev/null 2>&1 && echo "    claude   : $(brew list --cask --versions claude-code)"
+  brew list --cask warp            &>/dev/null 2>&1 && echo "    warp     : $(brew list --cask --versions warp)"
+  brew list --cask zed             &>/dev/null 2>&1 && echo "    zed      : $(brew list --cask --versions zed)"
+  brew list --cask orbstack        &>/dev/null 2>&1 && echo "    orbstack : $(brew list --cask --versions orbstack)"
+  brew list --cask raycast         &>/dev/null 2>&1 && echo "    raycast  : $(brew list --cask --versions raycast)"
+  brew list --cask microsoft-edge  &>/dev/null 2>&1 && echo "    edge     : $(brew list --cask --versions microsoft-edge)"
+  # Config
+  [[ -d "$HOME/.oh-my-zsh" ]] && echo "    ohmyzsh  : installed"
 }
 
 # ─── Main ─────────────────────────────────────────────────────────────
