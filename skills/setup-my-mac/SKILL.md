@@ -37,7 +37,7 @@ curl -fsSL https://your-domain.com/setup-my-mac.sh | bash
 What happens:
 
 1. Installs **brew** and **bun** (the minimum bootstrap dependencies).
-2. Installs **Claude Code** via `bun install -g @anthropic-ai/claude-code`.
+2. Installs **Claude Code** via official native installer (`curl -fsSL https://claude.ai/install.sh | bash`).
 3. Installs this skill via `bunx skills add lidessen/lidessen@setup-my-mac -y -g`.
 4. Launches Claude in **headless mode** (`claude -p --dangerously-skip-permissions`) to install all remaining tools (uv, Python, Warp, Zed, etc.) using this skill's instructions.
 

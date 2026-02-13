@@ -41,13 +41,14 @@ else
 fi
 
 # ─── 3. Claude Code ──────────────────────────────────────────────────
+# Source: https://code.claude.com/docs/en/setup
+# Official native installer — no Node.js required, auto-updates.
 info "Claude Code"
 if command -v claude &>/dev/null; then
   ok "claude already installed"
 else
-  # Fresh Mac has no Node.js; use bun as the npm-compatible runtime.
-  bun install -g @anthropic-ai/claude-code
-  ok "claude installed via bun"
+  curl -fsSL https://claude.ai/install.sh | bash
+  ok "claude installed"
 fi
 
 # ─── 4. Check ANTHROPIC_API_KEY ──────────────────────────────────────
