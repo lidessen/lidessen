@@ -18,19 +18,26 @@
     main {
       max-width: 480px;
       margin: 0 auto;
-      padding: 4rem 1.5rem;
+      padding: 6rem 1.5rem;
     }
 
     h1 {
-      font-size: 1.1rem;
+      font-size: 1.25rem;
       font-weight: 600;
-      margin-bottom: 0.25rem;
+      letter-spacing: 0.02em;
+      margin-bottom: 0.35rem;
     }
 
     .subtitle {
       font-size: 0.8rem;
       color: #999;
-      margin-bottom: 2.5rem;
+      margin-bottom: 3rem;
+    }
+
+    hr {
+      border: none;
+      border-top: 1px solid #e5e5e5;
+      margin-bottom: 1.5rem;
     }
 
     ul {
@@ -38,13 +45,17 @@
     }
 
     li {
-      padding: 0.4rem 0;
+      padding: 0.45rem 0;
+      display: flex;
+      align-items: baseline;
+      gap: 0.6rem;
     }
 
     a {
       color: #1a1a1a;
       text-decoration: none;
       border-bottom: 1px solid #ddd;
+      transition: border-color 0.2s;
     }
 
     a:hover {
@@ -52,8 +63,14 @@
     }
 
     .dim {
-      color: #999;
-      font-size: 0.85rem;
+      color: #aaa;
+      font-size: 0.8rem;
+    }
+
+    footer {
+      margin-top: 4rem;
+      font-size: 0.75rem;
+      color: #ccc;
     }
   </style>
 </head>
@@ -61,10 +78,12 @@
   <main>
     <h1>Lidessen</h1>
     <p class="subtitle">天地转，光阴迫。一万年太久，只争朝夕。</p>
+    <hr>
     <ul>
       <li><a href="https://github.com/lidessen/lidessen">GitHub</a></li>
-      <li><a href="setup-my-mac.sh">setup-my-mac.sh</a> <span class="dim">— macOS 装机脚本</span></li>
+      <li><a href="setup-my-mac.sh">setup-my-mac.sh</a> <span class="dim">macOS 装机脚本</span></li>
     </ul>
+    <footer>&copy; Lidessen</footer>
   </main>
 </body>
 </html>
