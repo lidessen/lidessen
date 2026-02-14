@@ -303,6 +303,18 @@ function validateSetupTask(path: string, task: unknown, errors: ValidationError[
   if (t.as !== undefined && typeof t.as !== "string") {
     errors.push({ path: `${path}.as`, message: 'Setup task "as" field must be a string' });
   }
+
+  if (t.doc !== undefined && typeof t.doc !== "string") {
+    errors.push({ path: `${path}.doc`, message: 'Setup task "doc" field must be a string' });
+  }
+
+  // as and doc are mutually exclusive
+  if (t.as !== undefined && t.doc !== undefined) {
+    errors.push({
+      path,
+      message: '"as" and "doc" are mutually exclusive — use one or the other',
+    });
+  }
 }
 
 /** Backends that don't require an explicit model field */

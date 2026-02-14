@@ -110,8 +110,12 @@ export interface SetupTask {
   /** Shell command to execute */
   shell: string;
 
-  /** Variable name to store output */
+  /** Variable name to store output (inline interpolation for short values) */
   as?: string;
+
+  /** Document name to store output (written to context dir for long content).
+   *  Mutually exclusive with `as`. */
+  doc?: string;
 }
 
 // ==================== Parsed Workflow ====================
